@@ -1,15 +1,17 @@
 import Link from 'next/link'
-import Layout from '../components/Layout'
+import React from 'react'
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-)
+import * as style from '../styles/index.module.css'
 
-export default IndexPage
+const index = () => {
+  return (<>
+      <h1 className={style.h1Style}>
+        こんちには
+      </h1>
+      <Link href="/contact"><a>Contactページへ移動</a></Link>
+      <Link href="/blog"><a>Blogページへ移動</a></Link>
+    </>
+  )
+}
+
+export default index
