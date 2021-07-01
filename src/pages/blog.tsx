@@ -43,16 +43,18 @@ export const getStaticProps : GetStaticProps = async (context: GetStaticPropsCon
     require.context('../data', true, /\.md$/)
   )
 
+  const orderedBlogs = blogs.sort((a, b) => {
+    return b.frontmatter.id - a.frontmatter.id
+  })
+
   return {
     props: {
-      blogs: blogs
+      blogs: orderedBlogs
     },
   };
 };
 
 const Blog:　NextPage<Props> = (props: BlogProps) => {
-
-  console.log(props.blogs[0])
 
   return (
     <div>
