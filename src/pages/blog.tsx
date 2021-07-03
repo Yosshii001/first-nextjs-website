@@ -1,8 +1,13 @@
 import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import Layout from "../components/Layout"
 
 import { GetStaticProps, GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import matter from 'gray-matter';
-import Link from 'next/link';
+
+import * as style from "../styles/blog.module.scss" ;
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -57,18 +62,29 @@ export const getStaticProps : GetStaticProps = async (context: GetStaticPropsCon
 const Blog:　NextPage<Props> = (props: BlogProps) => {
 
   return (
-    <div>
-      <h1>ブログページ</h1>
-      { props.blogs.map((blog, index) => (<>
-        <div key={index}>
-          <h3>{blog.frontmatter.title}</h3>
-          <p>{blog.frontmatter.date}</p>
-          <Link href={`/blog/${blog.slug}`}>Read More</Link>
+  <Layout>
+    <div className={style.wrapper}>
+      <div className={style.container}>
+        <h1>Blog</h1>
+        <p>エンジニアの日常生活をお届けします</p>
+        {props.blogs.map((blog, index) => {
+            return(
+                <div key={index} className={style.blogCard}>                            
+                    <div className={style.textContainer}>
+                        <h3>{blog.frontmatter.title}</h3>
+                        <p>{blog.frontmatter.excerpt}</p>
+                        <p>{blog.frontmatter.date}</p>
+                        <Link href={`/blog/${blog.slug}`}><a>Read More</a></Link>
+                    </div>
+                    <div className={style.cardImg}>
+                        <Image src={blog.frontmatter.image} alt="card-image" height={300} width={1000} quality={90} />
+                    </div>  
+                </div>
+            )}
+        )}
         </div>
-        </>
-      ))
-      }
     </div>
+  </Layout>
   )
 }
 
